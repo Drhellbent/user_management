@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react"
 import { createUser } from "../services/auth_service";
 import { validateEmail } from "../utils/validation";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/slice/authSlice";
+import EmailField from "./emailField";
+import PasswordField from "./passwordField";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUpForm(){
     
     const [S_disabled, setDisabled] = useState(true);
     const [S_formData, setFormData] = useState({"name":"","email":"","password":""});
     const [S_confrmPass, setConfrmPass] = useState('');
+    const dispatch = useDispatch()
+    const [S_errorMsg, setErrorMsg] = useState('')
+    const navigate = useNavigate()
     useEffect(()=>{
         
         const nameValidation = S_formData?.name.length >= 2 ? true : false
@@ -14,15 +22,20 @@ export default function SignUpForm(){
         const passwordValidation = S_formData?.password && S_formData?.password.length >=8 && S_formData?.password == S_confrmPass ? true : false
         if(nameValidation && emailValidation && passwordValidation){
             setDisabled(false)
+        }else if(S_disabled == false){
+            setDisabled(true)
         }
 
     },[S_formData, S_confrmPass])
     const handleSubmit=async()=>{
         try{
             const response = await createUser(S_formData);
-            console.log("response", response
-
-            )
+            if(response.token){
+                dispatch(login(response.token))
+                navigate("/dashboard")
+            }else{
+                setErrorMsg("Unable To Login")
+            }
         }catch(err){    
             console.log("err",err);
             return ''
@@ -54,29 +67,17 @@ export default function SignUpForm(){
                         onChange={(e)=>{handleInputChange("name", e.target.value)}}
                         />
 
-                    <input 
-                        type="email"
-                        className="block border border-grey-light w-full p-3 rounded mb-4"
-                        name="email"
-                        placeholder="Email" 
-                        onChange={(e)=>{handleInputChange("email", e.target.value)}}
-                        
-                        />
-
-                    <input 
-                        type="password"
-                        className="block border border-grey-light w-full p-3 rounded mb-4"
-                        name="password"
-                        placeholder="Password" 
-                        onChange={(e)=>{handleInputChange("password", e.target.value)}}
-                        />
+                    <EmailField handleInputChange={handleInputChange}/>
+                    <PasswordField handleInputChange={handleInputChange}/>
+                  
                     <input 
                         type="password"
                         className="block border border-grey-light w-full p-3 rounded mb-4"
                         name="confirm_password"
                         placeholder="Confirm Password"
                         onChange={(e)=>{setConfrmPass(e.target.value)}}/>
-
+                        
+                    {S_errorMsg &&  <span className="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400">{S_errorMsg}</span>}
                     <button
                         onClick={handleSubmit}
                         disabled = {S_disabled}

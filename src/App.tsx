@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SignInPage from './pages/signin';
 import SignUpPage from './pages/signup';
 import Dashboard from './pages/dashboard';
+import AuthValidation from './authValidation';
 
 
 function App() {
@@ -15,9 +16,9 @@ function App() {
     <Route
       path="/dashboard"
       element={
-        // <PrivateRoute>
+        <AuthValidation>
           <Dashboard />
-        // </PrivateRoute>
+        </AuthValidation>
       }
     />
   </Routes>

@@ -25,7 +25,7 @@ export const createUser=async (params:UserRegisterParams)=>{
 export const loginUser=async(data:LoginParams)=>{
         try{
             let url = BaseUrl+"login"
-            const response = await getAsyncData(url, {params:data})
+            const response = await getAsyncPostData(url, data)
             return response
         }catch(err){
             console.log("err",err)
