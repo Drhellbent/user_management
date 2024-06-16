@@ -1,4 +1,5 @@
 import axios from "axios";
+import { catchErr } from "../utils/common_function";
 export const getAsyncData = async (url:string, config?:any,params?:any, token?:string) => {
     try {
         config = config ? config : {};
@@ -33,8 +34,7 @@ export const getAsyncData = async (url:string, config?:any,params?:any, token?:s
         const response = responseData ? responseData?.data : false;
         return response;
     } catch (err) {
-        console.log("Err",err);
-        return {} // can handle to throw err using env varialble and can log too using (data dog, new relic etc)
+        catchErr(err) 
     }
 };
 
@@ -68,8 +68,7 @@ export const getAsyncPostData = async (url:string, params:any, headers?:any, tok
         const response = responseData ? responseData.data : false;
         return response;
     } catch (err) {
-        console.log("Err",err);
-        return {} // can handle to throw err using env varialble and can log too using (data dog, new relic etc)
+        catchErr(err) // can handle to throw err using env varialble and can log too using (data dog, new relic etc)
         
     }
 }

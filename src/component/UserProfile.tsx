@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux"
 import { logout } from "../redux/slice/authSlice"
 import { useNavigate } from "react-router-dom"
+import { catchErr } from "../utils/common_function"
 
 export default function UserProfile(){
     const navigate = useNavigate()
@@ -10,7 +11,7 @@ export default function UserProfile(){
             dispatch(logout())
             navigate("/signin")
         }catch(err){
-            return ''
+            catchErr(err) 
         }
     }
    return (<>

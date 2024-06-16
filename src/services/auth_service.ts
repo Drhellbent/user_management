@@ -1,3 +1,4 @@
+import { catchErr } from "../utils/common_function"
 import { getAsyncData, getAsyncPostData } from "./common_service"
 
 const BaseUrl = `https://reqres.in/api/`
@@ -17,7 +18,7 @@ export const createUser=async (params:UserRegisterParams)=>{
        return response
     
     }catch(err){
-        console.log("err",err)
+        catchErr(err) 
     }
 
 }
@@ -28,6 +29,6 @@ export const loginUser=async(data:LoginParams)=>{
             const response = await getAsyncPostData(url, data)
             return response
         }catch(err){
-            console.log("err",err)
+            catchErr(err) 
         }
 }

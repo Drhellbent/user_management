@@ -6,6 +6,7 @@ import { login } from "../redux/slice/authSlice";
 import { validateEmail } from "../utils/validation";
 import EmailField from "./emailField";
 import PasswordField from "./passwordField";
+import { catchErr } from "../utils/common_function";
 
 export default function SignInForm() {
   const navigate = useNavigate()
@@ -23,7 +24,8 @@ export default function SignInForm() {
         setErrorMsg("Invalid Password or Email")
       }
     }catch(err){
-      return ``
+      catchErr(err) 
+      
     }
   }
   const handleInputChange=(key:string, value:string)=>{
@@ -32,8 +34,8 @@ export default function SignInForm() {
         setFormData(formData);
 
     }catch(err){
-        console.log("err", err);
-        return {}
+      catchErr(err) 
+
     }
 }
   useEffect(()=>{

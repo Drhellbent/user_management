@@ -6,6 +6,7 @@ import { login } from "../redux/slice/authSlice";
 import EmailField from "./emailField";
 import PasswordField from "./passwordField";
 import { useNavigate } from "react-router-dom";
+import { catchErr } from "../utils/common_function";
 
 export default function SignUpForm(){
     
@@ -37,8 +38,7 @@ export default function SignUpForm(){
                 setErrorMsg("Unable To Login")
             }
         }catch(err){    
-            console.log("err",err);
-            return ''
+            catchErr(err);
         }
     }
     const handleInputChange=(key:string, value:string)=>{
@@ -47,8 +47,7 @@ export default function SignUpForm(){
             setFormData(formData);
 
         }catch(err){
-            console.log("err", err);
-            return {}
+            catchErr(err) 
         }
     }
 
