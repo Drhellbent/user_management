@@ -18,7 +18,7 @@ export default function SignInForm() {
       const response = await loginUser(S_formData)
       if(response.token){
         dispatch(login(response.token))
-        navigate("/dashboard")
+        navigate("/")
       }else{
         setErrorMsg("Invalid Password or Email")
       }

@@ -32,7 +32,7 @@ export default function SignUpForm(){
             const response = await createUser(S_formData);
             if(response.token){
                 dispatch(login(response.token))
-                navigate("/dashboard")
+                navigate("/")
             }else{
                 setErrorMsg("Unable To Login")
             }
