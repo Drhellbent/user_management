@@ -1,4 +1,18 @@
+import { useDispatch } from "react-redux"
+import { logout } from "../redux/slice/authSlice"
+import { useNavigate } from "react-router-dom"
+
 export default function UserProfile(){
+    const navigate = useNavigate()
+    const dispatch= useDispatch()
+    const handleLogout=()=>{
+        try{
+            dispatch(logout())
+            navigate("/signin")
+        }catch(err){
+            return ''
+        }
+    }
    return (<>
     <div className="bg-white overflow-hidden shadow rounded-lg border">
     <div className="px-4 py-5 sm:px-6">
@@ -46,6 +60,8 @@ export default function UserProfile(){
             </div>
         </dl>
     </div>
+    
 </div>
+<button type="button" onClick={handleLogout} className="mt-4 text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Logout</button>
    </>)
 }
