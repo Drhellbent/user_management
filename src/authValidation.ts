@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from './redux/Store';
@@ -7,7 +7,7 @@ import { RootState } from './redux/Store';
 const AuthValidation = ({ children }: { children: JSX.Element }) => {
 
   const navigation = useNavigate()
-  // const isAuthenticated = true
+  
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
